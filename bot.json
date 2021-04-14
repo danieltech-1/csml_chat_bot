@@ -1,0 +1,31 @@
+{
+  "id": "f842c0dc-0429-48b3-8caf-41c7f872664d",
+  "name": "Livestorm Demo",
+  "description": null,
+  "default_flow": "Default",
+  "flows": [
+    {
+      "name": "Default",
+      "description": "Simple barebones flow. Code your own chatbot from this template!",
+      "commands": []
+    }
+  ],
+  "files": [],
+  "functions": [],
+  "apps": [
+    {
+      "name": "livestorm",
+      "description": "Register participants to your upcoming Livestorm events!\n\n## Description\nUsing this app, you can easily list your upcoming events (webinars, conferences, etc.) and their sessions, and register participants, from your chatbot. This is the perfect app for a lead generation chatbot, connected to Livestorm!\n\nTo get started, you will need a Livestorm account and an API key, as described in [the Livestorm documentation](https://developers.livestorm.co/docs/authorization).\n\n\n## Usage\n\nWith this app, you can perform 3 actions:\n- get a list of your events\n- given an event ID, get a list of its sessions\n- register new participants to a session\n\nSee examples below for each available method.\n\n### List Events\n\n```cpp\ndo Fn(\n  \"livestorm\",\n  method=\"listEvents\",\n)\n```\n\n### List Event Sessions\n\n```cpp\ndo Fn(\n  \"livestorm\",\n  method=\"listEventSessions\",\n  session_id=\"SESSION_ID\"\n)\n```\n\n### Register a Participant to a Session\n\n```cpp\ndo Fn(\n  \"livestorm\",\n  method=\"registerParticipant\",\n  session_id=\"SESSION_ID\",\n  participant={\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john@doe.com\",\n    \"company\": \"CoolCompany\"\n  },\n)\n```\n\nAt least the `first_name`, `last_name` and `email` fields of the `participant` object are required. Depending on your event's configuration, some additional fields may also be required (for instance, the `company` field here), or optional. The fields can be configured from the Livestorm administration panel.\n\nIf the participant already exists, or the session is not published, or a required field is missing, or any other error as returned by Livestorm's API, this call will fail and an error message will be available in the response data.\n",
+      "args": [
+        "method=\"listEvents|registerParticipant\""
+      ],
+      "runtime": "nodejs12.x",
+      "handler": "index.handler",
+      "environment": {
+        "API_KEY": ""
+      },
+      "app_id": "8d0f073c-ddcf-48fa-a4be-cc5a55fdca2e",
+      "version": "1.0.0"
+    }
+  ]
+}

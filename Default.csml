@@ -1,0 +1,62 @@
+// Greetings
+start:
+  say "Hi there!"
+  say Image("https://media.giphy.com/media/14cAD9mBjofP5m/giphy.gif")
+  say Wait(1000)
+  say Typing(1500)
+  say "We have a cool new webinar coming up next week..."
+  say Wait(1000)
+  say Typing(1500)
+  say "It's about creating powerful chatbots in CSML."
+  say QuickReply(
+    "How cool is it?",
+    buttons=[Button("Awesome! 😻"), Button("Wow! 🤩")]
+  )
+  hold
+  remember participant = {}
+  say "Great! Let's get you registered!"
+  goto getInformation
+
+// Get the required information from the user
+getInformation:
+  say Typing(1000)
+  say "What's your first name?"
+  hold
+
+  do participant.first_name = event
+  say Typing(1500)
+  say "OK {{participant.first_name}}, and what's your last name?"
+  hold
+
+  do participant.last_name = event
+  say Typing(1500)
+  say "Fantastic. Where do you work, {{participant.first_name}}?"
+  hold
+
+  do participant.company = event
+  say Typing(1500)
+  say "Got it. Last question: what's your email? I'll send you an invite and a reminder before the event starts!"
+  hold
+
+  do participant.email = event
+  goto registerToWebinar
+
+// Register the user to the session
+registerToWebinar:
+  do Fn(
+    "livestorm",
+    method="registerParticipant",
+    session_id="SESSION_ID",
+    participant=participant
+  )
+  goto closeConversation
+
+// Thank the user for taking the time to register and finish the conversation
+closeConversation:
+  say Typing(1500)
+  say "OK {{participant.first_name}}, that's all for me 🤗! You are registered to the webinar!"
+  say Wait(500)
+  say Typing(1200)
+  say "See you there, and until then, check out our docs here:"
+  say Url("https://docs.csml.dev", text="CSML Documentation", hide_url=true)
+  goto end
